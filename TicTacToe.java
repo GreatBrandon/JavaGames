@@ -22,11 +22,8 @@ public class TicTacToe extends JPanel implements ActionListener, Fonts {
     private int count;
 
     public TicTacToe() {
-        super(new BorderLayout());
-        createAndShowGUI();
-    }
-
-    private void createAndShowGUI() {
+        setLayout(new BorderLayout());
+        setPreferredSize(new Dimension(Main.FRAME_WIDTH, Main.FRAME_HEIGHT));
         for (int i = 0; i < buttons.length; i++) {
             buttons[i] = new JButton(); // cannot be shorthand for loop due to constructor inside
             buttons[i].setFont(BUTTON_FONT);
@@ -138,8 +135,7 @@ public class TicTacToe extends JPanel implements ActionListener, Fonts {
         if (n == 0) {
             setUpNewGame();
         } else if (n!=1) {
-            Main.exitToMenu();
-            setUpNewGame();
+            Main.createAndShowGUI(new MainMenu());
         }
     }
 }

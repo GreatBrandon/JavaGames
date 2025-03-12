@@ -1,44 +1,50 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.Arrays;
 
-public class Sudoku extends JPanel implements ActionListener, Fonts {
-    private final JLabel title = new JLabel("Sudoku");
-    private final JButton exit =  new JButton("Exit");
-    private final JPanel gamePanel = new JPanel(new GridLayout(9,9));
-    private final JTextField[][] fields = new JTextField[9][9];
+import javax.swing.JTextField;
 
-    public Sudoku() {
-        super(new BorderLayout());
-        createAndShowGUI();
-    }
+public class Sudoku {
+    private char[][] board = new char[9][9];
+    private final char[][] solution = new char[9][9];
+    private final String difficulty;
 
-    private void createAndShowGUI() {
+
+    public Sudoku(String board, String solution, String difficulty) {
+        int count = 0;
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                fields[i][j] = new JTextField();
-//                fields[i][j].setEditable(false);
-                fields[i][j].setBackground(Color.WHITE);
-                fields[i][j].addActionListener(this);
-                gamePanel.add(fields[i][j]);
+                this.solution[i][j] = solution.charAt(count);
+                if (board.charAt(count) != '.') {
+                    this.board[i][j] = board.charAt(count);
+                } else {
+                    this.board[i][j] = '\0';
+                }
+                count++;
             }
         }
-        title.setFont(LARGE_TITLE_FONT);
+        this.difficulty = difficulty;
+    }
 
-        exit.addActionListener(this);
+    public char getCell(int row, int col) {
+        return board[row][col];
+    }
 
-
-
-        add(title, BorderLayout.NORTH);
-        add(gamePanel, BorderLayout.CENTER);
-        add(exit, BorderLayout.SOUTH);
+    public boolean checkSolution(JTextField[][] fields) {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (!fields[i][j].getText().equals(solution[i][j]+"")) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == exit) {
-            Main.exitToMenu();
-        }
+    public String toString() {
+        return "Sudoku{" +
+                "board=" + Arrays.deepToString(board) +
+                ", solution=" + Arrays.deepToString(solution) +
+                ", difficulty='" + difficulty + '\'' +
+                '}';
     }
 }

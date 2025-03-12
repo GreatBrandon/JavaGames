@@ -25,7 +25,7 @@ public class Ludo extends JPanel implements ActionListener, Fonts{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == exit){
-            Main.exitToMenu();
+            Main.createAndShowGUI(new MainMenu());
         }
     }
 }
